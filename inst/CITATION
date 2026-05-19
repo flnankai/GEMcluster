@@ -1,0 +1,25 @@
+citHeader("To cite GEMcluster in publications, please use:")
+
+bibentry(
+  bibtype = "Manual",
+  title = "GEMcluster: Semiparametric Elliptical Mixture Clustering",
+  author = c(
+    person("Long", "Feng"),
+    person("Dan", "Zhuang")
+  ),
+  year = "2026",
+  note = "R package version 0.1.0"
+)
+
+bibentry(
+  bibtype = "Unpublished",
+  title = "Semiparametric Elliptical Mixture Clustering for High-Dimensional Data",
+  author = c(
+    person("Long", "Feng"),
+    person("Dan", "Zhuang")
+  ),
+  year = "2026",
+  note = "arXiv:2605.08995",
+  doi = "10.48550/arXiv.2605.08995",
+  url = "https://arxiv.org/abs/2605.08995"
+)

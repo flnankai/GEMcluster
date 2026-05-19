@@ -3,9 +3,9 @@ Type: Package
 Title: Semiparametric Elliptical Mixture Clustering
 Version: 0.1.0
 Authors@R: c(
-    person("Dan", "Zhuang", role = "aut"),
     person("Long", "Feng", role = c("aut", "cre"),
-           email = "flnankai@gmail.com")
+           email = "flnankai@gmail.com"),
+    person("Dan", "Zhuang", role = "aut")
   )
 Description: Implements generalized expectation-maximization clustering for
     high-dimensional semiparametric elliptical mixtures with cluster-specific
@@ -17,7 +17,7 @@ Description: Implements generalized expectation-maximization clustering for
     described in Feng and Zhuang (2026) <doi:10.48550/arXiv.2605.08995>.
 License: MIT + file LICENSE
 URL: https://arxiv.org/abs/2605.08995,
-        https://doi.org/10.48550/arXiv.2605.08995
+    https://doi.org/10.48550/arXiv.2605.08995
 Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
@@ -25,12 +25,17 @@ RoxygenNote: 7.3.2
 Config/testthat/edition: 3
 SystemRequirements: C++17
 VignetteBuilder: knitr
-Depends: R (>= 4.1.0)
-Imports: huge, Rcpp, stats, utils
-Suggests: knitr, mvtnorm, testthat (>= 3.0.0)
-LinkingTo: Rcpp, RcppArmadillo
-NeedsCompilation: yes
-Packaged: 2026-05-19 00:57:37 UTC; CodexSandboxOffline
-Author: Dan Zhuang [aut],
-  Long Feng [aut, cre]
-Maintainer: Long Feng <flnankai@gmail.com>
+Depends:
+    R (>= 4.1.0)
+Imports:
+    huge,
+    Rcpp,
+    stats,
+    utils
+Suggests:
+    knitr,
+    mvtnorm,
+    testthat (>= 3.0.0)
+LinkingTo:
+    Rcpp,
+    RcppArmadillo

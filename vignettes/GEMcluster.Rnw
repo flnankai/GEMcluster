@@ -1,0 +1,93 @@
+%\VignetteIndexEntry{GEMcluster: Semiparametric Elliptical Mixture Clustering}
+%\VignetteEngine{knitr::knitr}
+%\VignetteEncoding{UTF-8}
+\documentclass{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\title{GEMcluster: Semiparametric Elliptical Mixture Clustering}
+\author{Long Feng and Dan Zhuang}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Overview}
+
+\texttt{GEMcluster} implements a generalized EM algorithm for
+high-dimensional semiparametric elliptical mixture clustering. The model uses
+cluster-specific centers, a common sparse precision-shape matrix, and an
+unknown common radial generator. This is useful when clusters are approximately
+elliptical but may be heavy tailed.
+
+The main algorithm has four blocks:
+
+\begin{enumerate}
+\item robust sparse K-median initialization;
+\item posterior-responsibility updates using the estimated radial generator;
+\item radial-score weighted center updates;
+\item common-shape updates using a spatial-sign pilot, Tyler iteration, POET
+regularization, and graphical lasso.
+\end{enumerate}
+
+\section{Fixed K}
+
+The following example uses small tuning values to keep runtime short. For
+simulation studies, increase the number of GEM iterations, initialization
+starts, and outer starts.
+
+<<fixed-k, eval=FALSE>>=
+library(GEMcluster)
+
+set.seed(1)
+K <- 3
+p <- 20
+Mu <- dense_block_means(K = K, p = p, signal = 0.8)
+Sigma <- make_ar_cov(p = p, rho = 0.5)
+dat <- simulate_elliptical_mixture(
+  n = 90,
+  Mu = Mu,
+  Sigma = Sigma,
+  family = "t",
+  t_df = 5,
+  seed = 1
+)
+
+fit <- gem_fit(
+  dat$X,
+  K = K,
+  max_outer = 5,
+  init_n_boot = 2,
+  init_nstart = 4,
+  outer_nstart = 1
+)
+
+table(fit$cluster)
+cluster_accuracy(fit$cluster, dat$label)$accuracy
+@
+
+\section{GAP-LSE selection of K}
+
+\texttt{gem\_select\_k\_gap()} fits GEM on a candidate grid and compares the
+observed radial dispersion with column-permuted reference samples. It returns
+both the one-standard-error rule and the maximum-gap rule.
+
+<<gap-k, eval=FALSE>>=
+gap <- gem_select_k_gap(
+  dat$X,
+  K_grid = 2:5,
+  B = 20,
+  control = list(
+    max_outer = 5,
+    init_n_boot = 2,
+    init_nstart = 4,
+    outer_nstart = 1
+  )
+)
+
+gap$best_K
+gap$summary
+@
+
+\end{document}
